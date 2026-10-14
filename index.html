@@ -6,6 +6,10 @@
     <title>Windy | Öğrenmenin Okyanusu</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -24,11 +28,19 @@
 
         .wind {
             font-size: 75px;
-            margin-top: 35px;
+            margin-top: 30px;
         }
 
         h1 {
-            font-size: 30px;
+            font-size: 28px;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        .page {
+            padding: 15px;
         }
 
         .topics {
@@ -37,11 +49,10 @@
             gap: 14px;
             max-width: 500px;
             margin: 30px auto;
-            padding: 15px;
         }
 
         button {
-            padding: 22px 8px;
+            padding: 16px 10px;
             border: 1px solid #a5f3fc;
             border-radius: 15px;
             background: #164e63;
@@ -54,36 +65,368 @@
             background: #0e7490;
         }
 
-        #message {
-            padding: 20px;
+        .main-button {
+            background: #a5f3fc;
+            color: #083344;
+            font-weight: bold;
+            border: none;
+            width: 100%;
+            max-width: 350px;
+            margin: 15px auto;
+        }
+
+        .panel {
+            max-width: 450px;
+            margin: 20px auto;
+            padding: 22px;
+            background: rgba(8, 51, 68, 0.75);
+            border: 1px solid #67e8f9;
+            border-radius: 20px;
+        }
+
+        .fun-fact {
             font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin: 16px 0 7px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #a5f3fc;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .interests {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 9px;
+            margin-top: 12px;
+        }
+
+        .interest {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: left;
+            padding: 11px 8px;
+            background: #164e63;
+            border: 1px solid #67e8f9;
+            border-radius: 10px;
+        }
+
+        .interest input {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .interest label {
+            margin: 0;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .back-button {
+            background: transparent;
+            margin-top: 10px;
+        }
+
+        #message {
+            padding: 15px;
+            font-size: 18px;
+        }
+
+        #result {
+            overflow-wrap: anywhere;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 360px) {
+            .topics {
+                gap: 8px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            button {
+                font-size: 15px;
+            }
         }
     </style>
 </head>
 
 <body>
+
     <header>🌊 WINDY</header>
 
-    <div class="wind">☁️</div>
+    <!-- WINDY ANA SAYFASI -->
+    <main id="homePage" class="page">
 
-    <h1>Bugün ne öğrenmek istiyorsun?</h1>
-    <p>Öğrenmenin okyanusunu keşfet!</p>
+        <div class="wind">☁️</div>
 
-    <div class="topics">
-        <button onclick="choose('Bilim')">🔬 Bilim</button>
-        <button onclick="choose('Uzay')">🚀 Uzay</button>
-        <button onclick="choose('Doğa')">🐠 Doğa</button>
-        <button onclick="choose('Matematik')">🧮 Matematik</button>
-        <button onclick="choose('Diğer')">✨ Diğer</button>
-    </div>
+        <h1>Bugün ne öğrenmek istiyorsun?</h1>
+        <p>Öğrenmenin okyanusunu keşfet!</p>
 
-    <div id="message">Bir konu seçerek başlayabilirsin! 💙</div>
+        <div class="topics">
+            <button onclick="choose('Bilim')">🔬 Bilim</button>
+            <button onclick="choose('Uzay')">🚀 Uzay</button>
+            <button onclick="choose('Doğa')">🐠 Doğa</button>
+            <button onclick="choose('Matematik')">🧮 Matematik</button>
+            <button onclick="choose('Diğer')">✨ Diğer</button>
+        </div>
+
+        <div id="message">
+            Bir konu seçerek başlayabilirsin! 💙
+        </div>
+
+        <!-- EĞLENCELİ BİLGİ -->
+        <section id="discovery" class="panel hidden">
+            <h2 id="factTitle">✨ Biliyor muydun?</h2>
+
+            <p id="factText" class="fun-fact"></p>
+
+            <p>Birlikte daha fazlasını keşfedelim! 🌊</p>
+
+            <button class="main-button" onclick="openWind()">
+                Hadi keşfedelim! →
+            </button>
+        </section>
+
+    </main>
+
+
+    <!-- WIND TANIŞMA SAYFASI -->
+    <main id="windPage" class="page hidden">
+
+        <div class="wind">☁️</div>
+
+        <h1>Merhaba, ben Wind!</h1>
+
+        <div class="panel">
+            <p>
+                Öğrenme yolculuğundaki rehberin olacağım. 💙
+                <br>
+                Önce seni biraz tanıyabilir miyim?
+            </p>
+
+            <form id="introForm">
+
+                <label for="name">🪪 Adın ne? (İsteğe bağlı)</label>
+                <input
+                    id="name"
+                    type="text"
+                    maxlength="50"
+                    placeholder="Adını yaz..."
+                >
+
+                <label for="age">🎂 Kaç yaşındasın?</label>
+                <input
+                    id="age"
+                    type="number"
+                    min="1"
+                    max="120"
+                    step="1"
+                    placeholder="Yaşını yaz..."
+                    required
+                >
+
+                <label>🔭 Hangi konularla ilgileniyorsun?</label>
+
+                <div class="interests">
+
+                    <div class="interest">
+                        <input type="checkbox" id="science"
+                            name="interest" value="Bilim">
+                        <label for="science">🔬 Bilim</label>
+                    </div>
+
+                    <div class="interest">
+                        <input type="checkbox" id="space"
+                            name="interest" value="Uzay">
+                        <label for="space">🚀 Uzay</label>
+                    </div>
+
+                    <div class="interest">
+                        <input type="checkbox" id="nature"
+                            name="interest" value="Doğa">
+                        <label for="nature">🌿 Doğa</label>
+                    </div>
+
+                    <div class="interest">
+                        <input type="checkbox" id="math"
+                            name="interest" value="Matematik">
+                        <label for="math">➗ Matematik</label>
+                    </div>
+
+                    <div class="interest">
+                        <input type="checkbox" id="history"
+                            name="interest" value="Tarih">
+                        <label for="history">🏛️ Tarih</label>
+                    </div>
+
+                    <div class="interest">
+                        <input type="checkbox" id="art"
+                            name="interest" value="Sanat">
+                        <label for="art">🎨 Sanat</label>
+                    </div>
+
+                    <div class="interest">
+                        <input type="checkbox" id="technology"
+                            name="interest" value="Teknoloji">
+                        <label for="technology">💻 Teknoloji</label>
+                    </div>
+
+                    <div class="interest">
+                        <input type="checkbox" id="other"
+                            name="interest" value="Diğer">
+                        <label for="other">📚 Diğer</label>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="main-button">
+                    Hadi başlayalım! →
+                </button>
+
+            </form>
+
+            <div id="result" aria-live="polite"></div>
+
+            <button type="button" class="back-button"
+                onclick="backHome()">
+                ← Windy'ye geri dön
+            </button>
+        </div>
+
+    </main>
+
 
     <script>
+        // Her konu için eğlenceli bilgiler
+        const facts = {
+            "Bilim": {
+                title: "🔬 Biliyor muydun?",
+                text: "Ahtapotların üç kalbi vardır! İki kalp solungaçlara, biri vücudun geri kalanına kan pompalar."
+            },
+
+            "Uzay": {
+                title: "🚀 Uzaydan bir bilgi!",
+                text: "Güneş ışığının Dünya'ya ulaşması yaklaşık 8 dakika 20 saniye sürer."
+            },
+
+            "Doğa": {
+                title: "🐠 Doğanın şaşırtıcı dünyası!",
+                text: "Mercan resifleri, okyanus tabanının küçük bir bölümünü kaplamalarına rağmen çok sayıda deniz canlısına yuva sağlar."
+            },
+
+            "Matematik": {
+                title: "🧮 Matematik zamanı!",
+                text: "Bir dairenin çevresinin çapına oranı, pi (π) adı verilen özel bir sayıdır. Yaklaşık 3,14159'dur."
+            },
+
+            "Diğer": {
+                title: "✨ Merak etmeye devam!",
+                text: "Merak etmek, yeni şeyler öğrenmenin başlangıcıdır. Bugün hangi konuda yeni bir şey keşfetmek istersin?"
+            }
+        };
+
+        let selectedTopic = "";
+
         function choose(topic) {
+            selectedTopic = topic;
+
             document.getElementById("message").textContent =
                 topic + " konusunu birlikte keşfedelim! 🌊";
+
+            document.getElementById("factTitle").textContent =
+                facts[topic].title;
+
+            document.getElementById("factText").textContent =
+                facts[topic].text;
+
+            document.getElementById("discovery").classList.remove("hidden");
         }
+
+        function openWind() {
+            document.getElementById("homePage").classList.add("hidden");
+            document.getElementById("windPage").classList.remove("hidden");
+            window.scrollTo(0, 0);
+        }
+
+        function backHome() {
+            document.getElementById("windPage").classList.add("hidden");
+            document.getElementById("homePage").classList.remove("hidden");
+            window.scrollTo(0, 0);
+        }
+
+        document.getElementById("introForm").addEventListener(
+            "submit",
+            function(event) {
+                event.preventDefault();
+
+                const name = document.getElementById("name")
+                    .value.trim();
+
+                const age = Number(
+                    document.getElementById("age").value
+                );
+
+                const interests = Array.from(
+                    document.querySelectorAll(
+                        'input[name="interest"]:checked'
+                    )
+                ).map(input => input.value);
+
+                const result = document.getElementById("result");
+                result.replaceChildren();
+
+                if (!Number.isInteger(age) || age < 1 || age > 120) {
+                    result.textContent =
+                        "Lütfen geçerli bir yaş gir. 💙";
+                    return;
+                }
+
+                if (interests.length === 0) {
+                    result.textContent =
+                        "Lütfen en az bir ilgi alanı seç. 🌊";
+                    return;
+                }
+
+                const greeting = document.createElement("h2");
+
+                greeting.textContent =
+                    "☁️ Merhaba" + (name ? ", " + name : "") + "!";
+
+                const message = document.createElement("p");
+
+                message.textContent =
+                    "İlgi alanların: " + interests.join(", ") +
+                    ". Seni tanıdığıma sevindim! 💙";
+
+                const nextMessage = document.createElement("p");
+
+                nextMessage.textContent =
+                    "Wind'deki öğrenme yolculuğuna hoş geldin! 🌊";
+
+                result.append(greeting, message, nextMessage);
+            }
+        );
     </script>
+
 </body>
 </html>
