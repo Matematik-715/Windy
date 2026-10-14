@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windy | Öğrenmenin Okyanusu</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(#075985, #0e7490, #164e63);
+            color: white;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        header {
+            padding: 22px;
+            font-size: 30px;
+            font-weight: bold;
+            background: #083344;
+        }
+
+        .wind {
+            font-size: 75px;
+            margin-top: 35px;
+        }
+
+        h1 {
+            font-size: 30px;
+        }
+
+        .topics {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 15px;
+        }
+
+        button {
+            padding: 22px 8px;
+            border: 1px solid #a5f3fc;
+            border-radius: 15px;
+            background: #164e63;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:active {
+            background: #0e7490;
+        }
+
+        #message {
+            padding: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>🌊 WINDY</header>
+
+    <div class="wind">☁️</div>
+
+    <h1>Bugün ne öğrenmek istiyorsun?</h1>
+    <p>Öğrenmenin okyanusunu keşfet!</p>
+
+    <div class="topics">
+        <button onclick="choose('Bilim')">🔬 Bilim</button>
+        <button onclick="choose('Uzay')">🚀 Uzay</button>
+        <button onclick="choose('Doğa')">🐠 Doğa</button>
+        <button onclick="choose('Matematik')">🧮 Matematik</button>
+        <button onclick="choose('Diğer')">✨ Diğer</button>
+    </div>
+
+    <div id="message">Bir konu seçerek başlayabilirsin! 💙</div>
+
+    <script>
+        function choose(topic) {
+            document.getElementById("message").textContent =
+                topic + " konusunu birlikte keşfedelim! 🌊";
+        }
+    </script>
+</body>
+</html>
