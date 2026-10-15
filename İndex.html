@@ -208,7 +208,7 @@ label {
     <div id="discovery" class="panel">
         <h2 id="topicTitle"></h2>
         <p id="fact"></p>
-        <button class="primary" onclick="openWind()">
+        <button class="primary" onclick="startLearning()">
             ☁️ Hadi keşfedelim!
         </button>
     </div>
@@ -257,6 +257,10 @@ label {
     <div id="welcome" class="panel">
         <h2 id="welcomeTitle"></h2>
         <p id="welcomeText"></p>
+<button onclick="editInterests()">⚙️ İlgi alanlarımı değiştir</button>
+
+<button class="primary" onclick="startLearning()">🌊 Hadi öğrenelim!</button>
+        
         <button onclick="backHome()">Ana sayfaya dön</button>
     </div>
 
@@ -297,9 +301,41 @@ function openWind() {
     document.getElementById("welcome").classList.remove("show");
     window.scrollTo(0, 0);
 }
+function startLearning() {
+    const selected = Array.from(
+        document.querySelectorAll('.interests input:checked')
+    ).map(item => item.value);
 
+    const pool = selected.flatMap(topic => learningData[topic] || []);
+    const cards = pool.sort(() => Math.random() - 0.5).slice(0, 3);
+
+    if (cards.length === 0) {
+        alert("Şimdilik Bilim, Uzay veya Doğa ilgi alanlarından birini seçelim! 💙");
+        return;
+    }
+
+    document.getElementById("homePage").style.display = "none";
+    document.getElementById("windPage").style.display = "none";
+    document.getElementById("learningPage").style.display = "block";
+
+    document.getElementById("learningCards").innerHTML = cards.map(item => `
+        <article style="background:#083344; padding:15px; margin:15px 0; border-radius:15px;">
+            <h2>${item.title}</h2>
+            <img src="${item.image}" alt="${item.title}" style="width:100%; max-width:400px; border-radius:12px;">
+            <p>${item.fact}</p>
+        </article>
+    `).join("");
+
+    window.scrollTo(0, 0);
+
+function editInterests() {
+    document.getElementById("welcome").classList.remove("show");
+    document.getElementById("profileForm").style.display = "block";
+   
+}
 function backHome() {
     document.getElementById("windPage").style.display = "none";
+    document.getElementById("learningPage").style.display = "none"; 
     document.getElementById("homePage").style.display = "block";
     window.scrollTo(0, 0);
 }
@@ -336,7 +372,95 @@ document.getElementById("profileForm").addEventListener("submit", function(event
     document.getElementById("welcome").classList.add("show");
     window.scrollTo(0, 0);
 });
-</script>
+const learningData = {
+    "Bilim": [
+        {
+            title: "Ahtapotlar",
+            image: "https://images.unsplash.com/photo-1545670723-196ed0954986?w=600",
+            fact: "Ahtapotların üç kalbi vardır!"
+        },
+        {
+            title: "İnsan vücudu",
+            image: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=600",
+            fact: "Yetişkin insan vücudunda genellikle 206 kemik bulunur."
+        },
+        {
+            title: "Bitkiler",
+            image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600",
+            fact: "Bitkiler fotosentez yaparak kendi besinlerini üretir."
+        }
+    ],
+    "Uzay": [
+        {
+            title: "Satürn",
+            image: "https://images.unsplash.com/photo-1614732484003-ef9881555dc3?w=600",
+            fact: "Satürn'ün halkaları çoğunlukla buz ve kaya parçalarından oluşur."
+        },
+        {
+            title: "Dünya",
+            image: "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=600",
+            fact: "Dünya, Güneş'in çevresindeki turunu yaklaşık 365 günde tamamlar."
+        },
+        {
+            title: "Ay",
+            image: "https://images.unsplash.com/photo-1522030299830-16b8d3d049fe?w=600",
+            fact: "Ay, Dünya'nın doğal uydusudur."
+        }
+    ],
+    "Doğa": [
+        {
+            title: "Okyanuslar",
+            image: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=600",
+            fact: "Okyanuslar, Dünya yüzeyinin yaklaşık %71'ini kaplar."
+        },
+        {
+            title: "Kelebekler",
+            image: "https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=600",
+            fact: "Kelebekler tat alma duyularını ayaklarındaki alıcılarla da kullanır."
+        },
+        {
+            title: "Ağaçlar",
+            image: "https://images.unsplash.com/photo-1448375240586-882707db888b?w=600",
+            fact: "Ormanlar çok sayıda canlıya yaşam alanı sağlar."
+        }
+    ]
+};
 
+function showLearning() {
+    const selected = Array.from(
+        document.querySelectorAll('.interests input:checked')
+    ).map(item => item.value);
+
+    const pool = selected.flatMap(topic => learningData[topic] || []);
+
+    if (pool.length === 0) {
+        alert("Seçtiğin konular için yeni bilgiler hazırlıyoruz! Şimdilik Bilim, Uzay veya Doğa seçebilirsin.");
+        return;
+    }
+
+    const shuffled = pool.sort(() => Math.random() - 0.5);
+    const cards = shuffled.slice(0, 3);
+
+    document.getElementById("homePage").style.display = "none";
+    document.getElementById("windPage").style.display = "none";
+    document.getElementById("learningPage").style.display = "block";
+
+    document.getElementById("learningCards").innerHTML = cards.map(item => `
+        <article style="background:#083344; padding:15px; margin:15px 0; border-radius:15px;">
+            <h2>${item.title}</h2>
+            <img src="${item.image}" alt="${item.title}"
+                 style="width:100%; max-width:400px; border-radius:12px;">
+            <p>${item.fact}</p>
+        </article>
+    `).join("");
+
+    window.scrollTo(0, 0);
+}
+</script>
+<div id="learningPage" class="panel">
+    <h1>🌊 Öğrenme Okyanusu</h1>
+    <div id="learningCards"></div>
+    <button onclick="backHome()">🏠 Ana sayfaya dön</button>
+</div>
 </body>
 </html>
