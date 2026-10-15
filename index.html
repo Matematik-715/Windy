@@ -1,387 +1,342 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Windy | Öğrenmenin Okyanusu</title>
 
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 14px;
-            max-width: 500px;
-            margin: 30px auto;
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        button {
-            padding: 16px 10px;
-            border: 1px solid #a5f3fc;
-            border-radius: 15px;
-            background: #164e63;
-            color: white;
-            font-size: 17px;
-            cursor: pointer;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+    text-align: center;
+    min-height: 100vh;
+    background: linear-gradient(
+        to bottom,
+        #082f49,
+        #075985,
+        #0891b2,
+        #164e63
+    );
+}
 
-        button:active {
-            background: #0e7490;
-        }
+header {
+    background: #083344;
+    padding: 20px;
+    font-size: 28px;
+    font-weight: bold;
+}
 
-        .main-button {
-            background: #a5f3fc;
-            color: #083344;
-            font-weight: bold;
-            border: none;
-            width: 100%;
-            max-width: 350px;
-            margin: 15px auto;
-        }
+main {
+    max-width: 800px;
+    margin: auto;
+    padding: 25px 15px;
+}
 
-        .panel {
-            max-width: 450px;
-            margin: 20px auto;
-            padding: 22px;
-            background: rgba(8, 51, 68, 0.75);
-            border: 1px solid #67e8f9;
-            border-radius: 20px;
-        }
+.wind {
+    position: relative;
+    width: 120px;
+    height: 75px;
+    background: white;
+    border-radius: 50px;
+    margin: 45px auto 25px;
+    box-shadow: 0 0 25px #a5f3fc;
+}
 
-        .fun-fact {
-            font-size: 18px;
-            line-height: 1.7;
-        }
+.wind::before {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    top: -25px;
+    left: 18px;
+}
 
-        .hidden {
-            display: none !important;
-        }
+.wind::after {
+    content: "";
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    background: white;
+    border-radius: 50%;
+    top: -15px;
+    right: 12px;
+}
 
-        label {
-            display: block;
-            text-align: left;
-            margin: 16px 0 7px;
-            font-weight: bold;
-        }
+.face {
+    position: absolute;
+    z-index: 2;
+    top: 25px;
+    left: 0;
+    width: 100%;
+    color: #075985;
+    font-size: 22px;
+}
 
-        input[type="text"],
-        input[type="number"] {
-            width: 100%;
-            padding: 13px;
-            border: 1px solid #a5f3fc;
-            border-radius: 10px;
-            font-size: 16px;
-        }
+h1 {
+    font-size: 30px;
+}
 
-        .interests {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 9px;
-            margin-top: 12px;
-        }
+.subtitle {
+    color: #cffafe;
+    font-size: 18px;
+}
 
-        .interest {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-align: left;
-            padding: 11px 8px;
-            background: #164e63;
-            border: 1px solid #67e8f9;
-            border-radius: 10px;
-        }
+.topics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    max-width: 520px;
+    margin: 28px auto;
+}
 
-        .interest input {
-            width: 18px;
-            height: 18px;
-            flex-shrink: 0;
-        }
+button {
+    padding: 18px 10px;
+    border: 1px solid #a5f3fc;
+    border-radius: 15px;
+    background: #164e63;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
 
-        .interest label {
-            margin: 0;
-            font-weight: normal;
-            cursor: pointer;
-        }
+button:hover {
+    background: #0e7490;
+}
 
-        .back-button {
-            background: transparent;
-            margin-top: 10px;
-        }
+.panel {
+    display: none;
+    max-width: 550px;
+    margin: 25px auto;
+    padding: 22px;
+    background: rgba(3, 37, 65, 0.8);
+    border: 1px solid #67e8f9;
+    border-radius: 18px;
+}
 
-        #message {
-            padding: 15px;
-            font-size: 18px;
-        }
+.panel.show {
+    display: block;
+}
 
-        #result {
-            overflow-wrap: anywhere;
-            line-height: 1.7;
-        }
+.primary {
+    background: #0891b2;
+    margin-top: 15px;
+}
 
-        @media (max-width: 360px) {
-            .topics {
-                gap: 8px;
-            }
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 18px;
+    border-radius: 10px;
+    border: 1px solid #67e8f9;
+    font-size: 16px;
+}
 
-            h1 {
-                font-size: 24px;
-            }
+label {
+    display: block;
+    text-align: left;
+    margin-top: 12px;
+}
 
-            button {
-                font-size: 15px;
-            }
-        }
-    </style>
+.interests {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.interests label {
+    background: #164e63;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.small {
+    font-size: 13px;
+    color: #cffafe;
+}
+
+.fish {
+    font-size: 28px;
+    margin: 10px;
+}
+
+@media (max-width: 400px) {
+    h1 {
+        font-size: 25px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <header>🌊 WINDY</header>
+<header>🌊 WINDY</header>
 
-    <!-- WINDY ANA SAYFASI -->
-    <main id="homePage" class="page">
+<main id="homePage">
 
-        <div class="wind">☁️</div>
+    <div class="wind">
+        <span class="face">⌒　⌒</span>
+    </div>
 
-        <h1>Bugün ne öğrenmek istiyorsun?</h1>
-        <p>Öğrenmenin okyanusunu keşfet!</p>
+    <h1>Öğrenmenin Okyanusu</h1>
+    <p class="subtitle">Bugün neler öğrenmek istiyorsun?</p>
+    <p>Bir konu seç ve keşfe başla! ✨</p>
 
-        <div class="topics">
-            <button onclick="choose('Bilim')">🔬 Bilim</button>
-            <button onclick="choose('Uzay')">🚀 Uzay</button>
-            <button onclick="choose('Doğa')">🐠 Doğa</button>
-            <button onclick="choose('Matematik')">🧮 Matematik</button>
-            <button onclick="choose('Diğer')">✨ Diğer</button>
+    <div class="topics">
+        <button onclick="choose('Bilim')">🔬 Bilim</button>
+        <button onclick="choose('Uzay')">🚀 Uzay</button>
+        <button onclick="choose('Doğa')">🐠 Doğa</button>
+        <button onclick="choose('Matematik')">🧮 Matematik</button>
+        <button onclick="choose('Tarih')">🏛️ Tarih</button>
+        <button onclick="choose('Sanat')">🎨 Sanat</button>
+        <button onclick="choose('Teknoloji')">💻 Teknoloji</button>
+        <button onclick="choose('Diğer')">✨ Diğer</button>
+    </div>
+
+    <div id="discovery" class="panel">
+        <h2 id="topicTitle"></h2>
+        <p id="fact"></p>
+        <button class="primary" onclick="openWind()">
+            ☁️ Hadi keşfedelim!
+        </button>
+    </div>
+
+    <p id="message">Okyanusta keşfedilecek çok şey var! 💙</p>
+
+</main>
+
+<main id="windPage" style="display:none">
+
+    <div class="wind">
+        <span class="face">⌒　⌒</span>
+    </div>
+
+    <h1>Merhaba, ben Wind! ☁️</h1>
+    <p class="subtitle">Öğrenme yolculuğunda sana rehberlik edeceğim.</p>
+
+    <form id="profileForm" class="panel show">
+
+        <label for="name">Adın (isteğe bağlı)</label>
+        <input id="name" type="text" maxlength="30"
+               placeholder="Adın">
+
+        <label for="age">Kaç yaşındasın?</label>
+        <input id="age" type="number" min="1" max="120" required
+               placeholder="Yaşın">
+
+        <p class="subtitle">Neler ilgini çekiyor?</p>
+
+        <div class="interests">
+            <label><input type="checkbox" value="Bilim"> 🔬 Bilim</label>
+            <label><input type="checkbox" value="Uzay"> 🚀 Uzay</label>
+            <label><input type="checkbox" value="Doğa"> 🌿 Doğa</label>
+            <label><input type="checkbox" value="Matematik"> 🧮 Matematik</label>
+            <label><input type="checkbox" value="Tarih"> 🏛️ Tarih</label>
+            <label><input type="checkbox" value="Sanat"> 🎨 Sanat</label>
+            <label><input type="checkbox" value="Teknoloji"> 💻 Teknoloji</label>
+            <label><input type="checkbox" value="Diğer"> ✨ Diğer</label>
         </div>
 
-        <div id="message">
-            Bir konu seçerek başlayabilirsin! 💙
-        </div>
+        <button class="primary" type="submit">🌊 Hadi başlayalım!</button>
 
-        <!-- EĞLENCELİ BİLGİ -->
-        <section id="discovery" class="panel hidden">
-            <h2 id="factTitle">✨ Biliyor muydun?</h2>
+        <p class="small">Bu deneme sürümünde bilgiler bir hesaba kaydedilmez.</p>
+    </form>
 
-            <p id="factText" class="fun-fact"></p>
+    <div id="welcome" class="panel">
+        <h2 id="welcomeTitle"></h2>
+        <p id="welcomeText"></p>
+        <button onclick="backHome()">Ana sayfaya dön</button>
+    </div>
 
-            <p>Birlikte daha fazlasını keşfedelim! 🌊</p>
+    <button onclick="backHome()">← Geri dön</button>
 
-            <button class="main-button" onclick="openWind()">
-                Hadi keşfedelim! →
-            </button>
-        </section>
+</main>
 
-    </main>
+<div class="fish">🐠　🐟　🐡</div>
 
+<script>
+const facts = {
+    Bilim: "Ahtapotların üç kalbi vardır!",
+    Uzay: "Güneş ışığının Dünya'ya ulaşması yaklaşık 8 dakika 20 saniye sürer.",
+    Doğa: "Mercan resifleri pek çok deniz canlısına yuva olur.",
+    Matematik: "Pi sayısı yaklaşık 3,14159'dur.",
+    Tarih: "Tarih, geçmişte insanların nasıl yaşadığını anlamamıza yardım eder.",
+    Sanat: "Sanat, duygu ve düşüncelerimizi farklı yollarla anlatmamızı sağlar.",
+    Teknoloji: "İnternet, dünyanın dört bir yanındaki bilgisayarların bilgi paylaşmasını sağlar.",
+    Diğer: "Merak ettiğin her şey yeni bir keşfin başlangıcı olabilir!"
+};
 
-    <!-- WIND TANIŞMA SAYFASI -->
-    <main id="windPage" class="page hidden">
+function choose(topic) {
+    document.getElementById("topicTitle").textContent = topic + " keşfi! ✨";
+    document.getElementById("fact").textContent = facts[topic];
+    document.getElementById("discovery").classList.add("show");
+    document.getElementById("message").textContent =
+        topic + " hakkında keşfe hazır mısın? 💙";
+    document.getElementById("discovery").scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
 
-        <div class="wind">☁️</div>
+function openWind() {
+    document.getElementById("homePage").style.display = "none";
+    document.getElementById("windPage").style.display = "block";
+    document.getElementById("profileForm").style.display = "block";
+    document.getElementById("welcome").classList.remove("show");
+    window.scrollTo(0, 0);
+}
 
-        <h1>Merhaba, ben Wind!</h1>
+function backHome() {
+    document.getElementById("windPage").style.display = "none";
+    document.getElementById("homePage").style.display = "block";
+    window.scrollTo(0, 0);
+}
 
-        <div class="panel">
-            <p>
-                Öğrenme yolculuğundaki rehberin olacağım. 💙
-                <br>
-                Önce seni biraz tanıyabilir miyim?
-            </p>
+document.getElementById("profileForm").addEventListener("submit", function(event) {
+    event.preventDefault();
 
-            <form id="introForm">
+    const name = document.getElementById("name").value.trim();
+    const age = Number(document.getElementById("age").value);
+    const checked = document.querySelectorAll(
+        '.interests input[type="checkbox"]:checked'
+    );
 
-                <label for="name">🪪 Adın ne? (İsteğe bağlı)</label>
-                <input
-                    id="name"
-                    type="text"
-                    maxlength="50"
-                    placeholder="Adını yaz..."
-                >
+    if (!Number.isInteger(age) || age < 1 || age > 120) {
+        alert("Lütfen geçerli bir yaş gir.");
+        return;
+    }
 
-                <label for="age">🎂 Kaç yaşındasın?</label>
-                <input
-                    id="age"
-                    type="number"
-                    min="1"
-                    max="120"
-                    step="1"
-                    placeholder="Yaşını yaz..."
-                    required
-                >
+    if (checked.length === 0) {
+        alert("Lütfen en az bir ilgi alanı seç.");
+        return;
+    }
 
-                <label>🔭 Hangi konularla ilgileniyorsun?</label>
+    const interests = Array.from(checked).map(item => item.value);
 
-                <div class="interests">
+    document.getElementById("welcomeTitle").textContent =
+        "Merhaba" + (name ? ", " + name : "") + "! 💙";
 
-                    <div class="interest">
-                        <input type="checkbox" id="science"
-                            name="interest" value="Bilim">
-                        <label for="science">🔬 Bilim</label>
-                    </div>
+    document.getElementById("welcomeText").textContent =
+        "İlgi alanların: " + interests.join(", ") +
+        ". Öğrenme yolculuğuna hoş geldin! 🌊";
 
-                    <div class="interest">
-                        <input type="checkbox" id="space"
-                            name="interest" value="Uzay">
-                        <label for="space">🚀 Uzay</label>
-                    </div>
-
-                    <div class="interest">
-                        <input type="checkbox" id="nature"
-                            name="interest" value="Doğa">
-                        <label for="nature">🌿 Doğa</label>
-                    </div>
-
-                    <div class="interest">
-                        <input type="checkbox" id="math"
-                            name="interest" value="Matematik">
-                        <label for="math">➗ Matematik</label>
-                    </div>
-
-                    <div class="interest">
-                        <input type="checkbox" id="history"
-                            name="interest" value="Tarih">
-                        <label for="history">🏛️ Tarih</label>
-                    </div>
-
-                    <div class="interest">
-                        <input type="checkbox" id="art"
-                            name="interest" value="Sanat">
-                        <label for="art">🎨 Sanat</label>
-                    </div>
-
-                    <div class="interest">
-                        <input type="checkbox" id="technology"
-                            name="interest" value="Teknoloji">
-                        <label for="technology">💻 Teknoloji</label>
-                    </div>
-
-                    <div class="interest">
-                        <input type="checkbox" id="other"
-                            name="interest" value="Diğer">
-                        <label for="other">📚 Diğer</label>
-                    </div>
-
-                </div>
-
-                <button type="submit" class="main-button">
-                    Hadi başlayalım! →
-                </button>
-
-            </form>
-
-            <div id="result" aria-live="polite"></div>
-
-            <button type="button" class="back-button"
-                onclick="backHome()">
-                ← Windy'ye geri dön
-            </button>
-        </div>
-
-    </main>
-
-
-    <script>
-        // Her konu için eğlenceli bilgiler
-        const facts = {
-            "Bilim": {
-                title: "🔬 Biliyor muydun?",
-                text: "Ahtapotların üç kalbi vardır! İki kalp solungaçlara, biri vücudun geri kalanına kan pompalar."
-            },
-
-            "Uzay": {
-                title: "🚀 Uzaydan bir bilgi!",
-                text: "Güneş ışığının Dünya'ya ulaşması yaklaşık 8 dakika 20 saniye sürer."
-            },
-
-            "Doğa": {
-                title: "🐠 Doğanın şaşırtıcı dünyası!",
-                text: "Mercan resifleri, okyanus tabanının küçük bir bölümünü kaplamalarına rağmen çok sayıda deniz canlısına yuva sağlar."
-            },
-
-            "Matematik": {
-                title: "🧮 Matematik zamanı!",
-                text: "Bir dairenin çevresinin çapına oranı, pi (π) adı verilen özel bir sayıdır. Yaklaşık 3,14159'dur."
-            },
-
-            "Diğer": {
-                title: "✨ Merak etmeye devam!",
-                text: "Merak etmek, yeni şeyler öğrenmenin başlangıcıdır. Bugün hangi konuda yeni bir şey keşfetmek istersin?"
-            }
-        };
-
-        let selectedTopic = "";
-
-        function choose(topic) {
-            selectedTopic = topic;
-
-            document.getElementById("message").textContent =
-                topic + " konusunu birlikte keşfedelim! 🌊";
-
-            document.getElementById("factTitle").textContent =
-                facts[topic].title;
-
-            document.getElementById("factText").textContent =
-                facts[topic].text;
-
-            document.getElementById("discovery").classList.remove("hidden");
-        }
-
-        function openWind() {
-            document.getElementById("homePage").classList.add("hidden");
-            document.getElementById("windPage").classList.remove("hidden");
-            window.scrollTo(0, 0);
-        }
-
-        function backHome() {
-            document.getElementById("windPage").classList.add("hidden");
-            document.getElementById("homePage").classList.remove("hidden");
-            window.scrollTo(0, 0);
-        }
-
-        document.getElementById("introForm").addEventListener(
-            "submit",
-            function(event) {
-                event.preventDefault();
-
-                const name = document.getElementById("name")
-                    .value.trim();
-
-                const age = Number(
-                    document.getElementById("age").value
-                );
-
-                const interests = Array.from(
-                    document.querySelectorAll(
-                        'input[name="interest"]:checked'
-                    )
-                ).map(input => input.value);
-
-                const result = document.getElementById("result");
-                result.replaceChildren();
-
-                if (!Number.isInteger(age) || age < 1 || age > 120) {
-                    result.textContent =
-                        "Lütfen geçerli bir yaş gir. 💙";
-                    return;
-                }
-
-                if (interests.length === 0) {
-                    result.textContent =
-                        "Lütfen en az bir ilgi alanı seç. 🌊";
-                    return;
-                }
-
-                const greeting = document.createElement("h2");
-
-                greeting.textContent =
-                    "☁️ Merhaba" + (name ? ", " + name : "") + "!";
-
-                const message = document.createElement("p");
-
-                message.textContent =
-                    "İlgi alanların: " + interests.join(", ") +
-                    ". Seni tanıdığıma sevindim! 💙";
-
-                const nextMessage = document.createElement("p");
-
-                nextMessage.textContent =
-                    "Wind'deki öğrenme yolculuğuna hoş geldin! 🌊";
-
-                result.append(greeting, message, nextMessage);
-            }
-        );
-    </script>
+    document.getElementById("profileForm").style.display = "none";
+    document.getElementById("welcome").classList.add("show");
+    window.scrollTo(0, 0);
+});
+</script>
 
 </body>
 </html>
