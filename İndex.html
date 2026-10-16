@@ -1,187 +1,93 @@
--radius:10px;font-size:16px}
-label{display:block;margin-top:10px}
-.hidden{display:none}
-.cards{display:grid;grid-template-columns:1fr;gap:15px}
-.card{background:white;color:#164e63;border-radius:17px;padding:20px;text-align:center}
-.picture{font-size:48px}
-.card p{line-height:1.6}
-footer{text-align:center;padding:20px;color:#d9f5ff}
-@media(min-width:600px){.topics{grid-template-columns:repeat(4,minmax(0,1fr))}.cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Windy | Öğrenmenin Okyanusu</title>
+<style>
+:root{--deep:#063b59;--blue:#087ca7;--gold:#e7c979;--ink:#12374a}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial,sans-serif;color:var(--ink);background:linear-gradient(#e8fbff,#bdeef5 35%,#168bb2 75%,#07577e);min-height:100vh;overflow-x:hidden}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px clamp(16px,5vw,60px);background:#063b59;color:white;border-bottom:2px solid var(--gold)}
+.brand{font-size:1.3rem;font-weight:800}.brand small{display:block;font-size:.72rem;font-weight:500;color:#d5f4f7}
+header>small{color:#d5f4f7}main{width:min(1000px,92%);margin:auto;padding:28px 0 60px;position:relative}
+.hero{text-align:center;padding:16px 12px 22px}.tag{display:inline-block;border:1px solid var(--gold);border-radius:99px;padding:6px 13px;background:#ffffffb8;font-weight:700;color:var(--deep);font-size:.86rem}
+h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.1;color:var(--deep);margin:16px 0 10px}.subtitle{max-width:620px;margin:auto;line-height:1.6;color:#174d64}
+.wind{width:142px;height:105px;position:relative;margin:22px auto 0;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 8px 8px #02314920)}
+.cloud{position:absolute;inset:28px 5px 5px;background:#fffefa;border:2px solid #d9f4f5;border-radius:55px 55px 43px 43px}
+.cloud:before,.cloud:after{content:"";position:absolute;background:#fffefa;border:2px solid #d9f4f5;border-bottom:0;border-radius:50% 50% 0 0}
+.cloud:before{width:62px;height:48px;left:19px;top:-30px}.cloud:after{width:50px;height:40px;right:15px;top:-21px}
+.face{position:absolute;z-index:1;top:52px;left:0;right:0;text-align:center;font-size:25px;letter-spacing:7px;color:#12516b}.cheeks{position:absolute;z-index:1;top:70px;left:27px;right:25px;display:flex;justify-content:space-between}.cheeks i{width:14px;height:7px;border-radius:50%;background:#f7b8b5}
+@keyframes float{50%{transform:translateY(-7px)}}
+.panel{background:#fffdf6f2;border:1px solid #e7c979;border-radius:22px;padding:clamp(18px,4vw,32px);box-shadow:0 14px 35px #02314920;margin-top:18px}
+h2{text-align:center;color:var(--deep);margin:0 0 8px;font-size:clamp(1.35rem,3vw,2rem)}.intro{text-align:center;line-height:1.6;color:#456574;margin:0 auto 22px;max-width:600px}
+.topics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.topic{border:1px solid #c3e4e8;border-radius:15px;background:#f2fcfd;padding:16px 8px;min-height:100px;font:inherit;font-weight:750;color:#103f56;cursor:pointer}
+.topic span{display:block;font-size:1.8rem;margin-bottom:7px}.topic[aria-pressed=true]{background:#dff6f8;border:2px solid var(--blue)}.topic:focus-visible,.primary:focus-visible{outline:3px solid #e7c979}
+.notice{display:none;margin-top:18px;padding:15px;border-radius:14px;background:#e9f8f8;border-left:4px solid var(--blue);line-height:1.6}.notice.show{display:block}.notice strong{display:block;color:var(--deep)}
+.explore{text-align:center;margin-top:25px}.primary{border:0;border-radius:99px;padding:13px 22px;background:#07577e;color:white;font:inherit;font-weight:800;cursor:pointer;box-shadow:0 4px 0 #043e5b}.helper{font-size:.9rem;color:#587482;line-height:1.5}
+[hidden]{display:none!important}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:20px}.field{display:flex;flex-direction:column;gap:7px}.full{grid-column:1/-1}label{font-weight:700}input,textarea{font:inherit;border:1px solid #b6d7df;border-radius:11px;padding:12px;background:white;color:var(--ink)}input:focus,textarea:focus{outline:3px solid #087ca729;border-color:var(--blue)}
+.result{display:none;margin-top:16px;padding:14px;border-radius:13px;background:#e5f7f4;line-height:1.6}.result.show{display:block}
+footer{text-align:center;padding:18px;color:#e9fbff}footer span{color:#ffe5a0}
+.fish{position:fixed;pointer-events:none;opacity:.55;font-size:32px;animation:swim 20s linear infinite}.f1{top:40%;left:-55px}.f2{top:70%;right:-55px;animation-delay:5s;animation-direction:reverse}
+@keyframes swim{to{transform:translateX(calc(100vw + 120px))}}
+.bubble{position:fixed;bottom:-30px;border:1px solid #ffffff88;background:#ffffff22;border-radius:50%;animation:rise 14s linear infinite;pointer-events:none}.b1{width:18px;height:18px;left:9%}.b2{width:12px;height:12px;left:25%;animation-delay:5s}.b3{width:24px;height:24px;right:14%;animation-delay:2s}
+@keyframes rise{to{transform:translateY(-110vh);opacity:0}}
+@media(max-width:620px){header{padding:14px}.topics{grid-template-columns:repeat(2,minmax(0,1fr))}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}header>small{font-size:.75rem}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<header>
-<div class="logo">☁️</div>
-<h1>Windy</h1>
-<p>Öğrenmenin Okyanusu 🌊</p>
-</header>
+<div class="fish f1" aria-hidden="true">🐠</div><div class="fish f2" aria-hidden="true">🐟</div><div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div>
+<header><div class="brand">☁ windy<small>Öğrenmenin Okyanusu</small></div><small>Merak et · Keşfet · Öğren</small></header>
 <main>
-<section id="topicPage" class="panel">
-<div class="wind">☁️</div>
-<h2>Bugün neler öğrenmek istiyorsun?</h2>
-<p class="intro">Merhaba! Ben Wind. 💙 Birlikte yeni şeyler keşfedelim! İlgini çeken konuları seç.</p>
-<div class="topics">
-<button class="topic" data-topic="Bilim">🔬 Bilim</button>
-<button class="topic" data-topic="Uzay">🚀 Uzay</button>
-<button class="topic" data-topic="Doğa">🌿 Doğa</button>
-<button class="topic" data-topic="Matematik">➗ Matematik</button>
-<button class="topic" data-topic="Sanat">🎨 Sanat</button>
-<button class="topic" data-topic="Tarih">🏛️ Tarih</button>
-<button class="topic" data-topic="Teknoloji">💻 Teknoloji</button>
-<button class="topic" data-topic="Diğer">✨ Diğer</button>
-</div>
-<button id="continueButton" class="primary">Hadi keşfedelim! 🌟</button>
-</section>
-<section id="profilePage" class="panel hidden">
-<div class="wind">☁️</div>
-<h2>Önce seni tanıyalım!</h2>
-<p class="intro">Ben Wind! Sana daha uygun keşifler hazırlamak için birkaç bilgi verebilirsin. 💙</p>
-<label for="name">Adın (isteğe bağlı)</label>
-<input id="name" type="text" placeholder="Adını yaz">
-<label for="age">Yaşın (isteğe bağlı)</label>
-<input id="age" type="number" min="1" max="120" placeholder="Yaşın">
-<button id="startButton" class="primary">Öğrenmeye başlayalım! 🌊</button>
-<button id="backButton" class="secondary">← Konulara geri dön</button>
-</section>
-<section id="welcomePage" class="panel hidden">
-<div class="wind">☁️</div>
-<h2 id="welcomeTitle">Hoş geldin!</h2>
-<p class="intro">Okyanusun yeni keşifleri seni bekliyor. Hazır olduğunda başlayabiliriz!</p>
-<button id="learnButton" class="primary">Hadi öğrenelim! 🐬</button>
-<button id="changeButton" class="secondary">İlgi alanlarımı değiştir</button>
-</section>
-<section id="learningPage" class="panel hidden">
-<h2>🌊 Öğrenme köşen</h2>
-<p id="learningSubtitle" class="intro">Bugünkü keşiflerin burada!</p>
-<div id="cards" class="cards"></div>
-<button id="againButton" class="primary">Başka konular keşfet! ✨</button>
-</section>
-</main>
-<footer>Windy 💙 Merak et, keşfet ve öğren!</footer>
+<section class="hero"><span class="tag">🌊 Merakınla keşfet</span><h1>Bugün neler öğrenmek<br>istiyorsun?</h1><p class="subtitle">Okyanusun derinliklerinde yeni bilgiler seni bekliyor. Bir konu seç, keşfe birlikte çıkalım!</p>
+<div class="wind" role="img" aria-label="Gözleri kapalı gülümseyen Wind bulutu"><div class="cloud"></div><div class="face">⌒　⌒</div><div class="cheeks"><i></i><i></i></div></div></section>
+<section class="panel"><h2>Keşif konunu seç</h2><p class="intro">Bugün hangi dünyanın kapısını aralayalım?</p>
+<div class="topics" role="group" aria-label="Öğrenme konuları">
+<button class="topic" data-topic="Bilim" aria-pressed="false"><span>🔬</span>Bilim</button>
+<button class="topic" data-topic="Matematik" aria-pressed="false"><span>➗</span>Matematik</button>
+<button class="topic" data-topic="Uzay" aria-pressed="false"><span>🪐</span>Uzay</button>
+<button class="topic" data-topic="Doğa ve hayvanlar" aria-pressed="false"><span>🌿</span>Doğa ve hayvanlar</button>
+<button class="topic" data-topic="Tarih ve kültür" aria-pressed="false"><span>🏛️</span>Tarih ve kültür</button>
+<button class="topic" data-topic="Diğer" aria-pressed="false"><span>✨</span>Diğer</button></div>
+<div id="notice" class="notice" aria-live="polite"><strong id="topic-title"></strong><span id="topic-copy"></span></div>
+<div class="explore"><button id="explore" class="primary">Hadi keşfedelim ✨</button><p class="helper">Wind sana eşlik etmeye hazır.</p></div></section>
+<section id="profile" class="panel" hidden><h2>Wind seni tanımak istiyor ☁️</h2><p class="intro">Sana uygun keşifler önerebilmek için birkaç bilgi paylaşabilirsin.</p>
+<form id="form"><div class="form-grid"><div class="field"><label for="name">Adın</label><input id="name" maxlength="40" required placeholder="Adını yaz"></div>
+<div class="field"><label for="age">Yaşın</label><input id="age" type="number" min="5" max="100" required placeholder="Yaşın"></div>
+<div class="field full"><label for="interests">İlgi alanların</label><textarea id="interests" rows="3" maxlength="300" required placeholder="Örneğin: uzay, deneyler, matematik..."></textarea></div>
+<div class="field full"><p class="helper">Bu örnek sayfa bilgilerini bir sunucuya göndermez veya kalıcı olarak kaydetmez.</p></div><div class="field full"><button class="primary" type="submit">Keşfe başlayalım!</button></div></div></form><div id="result" class="result" aria-live="polite"></div></section>
+</main><footer>Windy <span>✦</span> Öğrenmenin Okyanusu</footer>
 <script>
-const selectedTopics=new Set();
-const topicButtons=document.querySelectorAll(".topic");
-const topicPage=document.getElementById("topicPage");
-const profilePage=document.getElementById("profilePage");
-const welcomePage=document.getElementById("welcomePage");
-const learningPage=document.getElementById("learningPage");
-
-function showPage(page){
-topicPage.classList.add("hidden");
-profilePage.classList.add("hidden");
-welcomePage.classList.add("hidden");
-learningPage.classList.add("hidden");
-page.classList.remove("hidden");
-window.scrollTo({top:0,behavior:"smooth"});
-}
-
-topicButtons.forEach(button=>{
-button.addEventListener("click",()=>{
-const topic=button.dataset.topic;
-if(selectedTopics.has(topic)){
-selectedTopics.delete(topic);
-button.classList.remove("selected");
-}else{
-selectedTopics.add(topic);
-button.classList.add("selected");
-}
-});
-});
-
-document.getElementById("continueButton").addEventListener("click",()=>{
-if(selectedTopics.size===0){
-alert("Önce en az bir konu seçer misin? 💙");
-return;
-}
-showPage(profilePage);
-});
-
-document.getElementById("backButton").addEventListener("click",()=>showPage(topicPage));
-
-document.getElementById("startButton").addEventListener("click",()=>{
-const name=document.getElementById("name").value.trim();
-document.getElementById("welcomeTitle").textContent=name?"Hoş geldin, "+name+"! ☁️":"Hoş geldin, keşifçi! ☁️";
-showPage(welcomePage);
-});
-
-document.getElementById("changeButton").addEventListener("click",()=>showPage(topicPage));
-document.getElementById("againButton").addEventListener("click",()=>showPage(topicPage));
-
-const discoveries={
-"Bilim":[
-{emoji:"🔬",title:"Minik ama güçlü",text:"Canlıların yapı taşlarından biri hücredir. Bazı canlılar tek bir hücreden oluşur!"},
-{emoji:"🧲",title:"Mıknatıslar",text:"Mıknatıslar bazı metalleri çeker. Ancak her metal mıknatıstan etkilenmez."},
-{emoji:"🌈",title:"Işık ve renkler",text:"Beyaz ışık, uygun koşullarda gökkuşağındaki farklı renklere ayrılabilir."}],
-"Uzay":[
-{emoji:"🪐",title:"Satürn",text:"Satürn, buz ve kaya parçalarından oluşan belirgin halkalarıyla tanınır."},
-{emoji:"🌙",title:"Ay",text:"Ay kendi ışığını üretmez; Güneş'ten gelen ışığı yansıtır."},
-{emoji:"☀️",title:"Güneş",text:"Güneş bir yıldızdır ve Dünya için en önemli enerji kaynaklarından biridir."}],
-"Doğa":[
-{emoji:"🐝",title:"Arıların görevi",text:"Birçok bitkinin çoğalmasına yardımcı olan tozlaşmada arılar önemli rol oynar."},
-{emoji:"🌳",title:"Ağaçlar",text:"Ağaçlar fotosentez yaparak güneş ışığını kullanır ve atmosfere oksijen verir."},
-{emoji:"🐙",title:"Ahtapotlar",text:"Ahtapotların üç kalbi vardır ve kollarındaki vantuzlar çevrelerini algılamalarına yardımcı olur."}],
-"Matematik":[
-{emoji:"🔢",title:"Sayı örüntüsü",text:"2, 4, 6, 8 dizisinde sayılar ikişer artar. Sonraki sayı 10'dur."},
-{emoji:"📐",title:"Üçgenler",text:"Bir üçgenin iç açılarının toplamı Öklid geometrisinde 180 derecedir."},
-{emoji:"♾️",title:"Sonsuzluk",text:"Doğal sayıları saymayı sürdürdüğümüzde son bir doğal sayıya ulaşamayız."}],
-"Sanat":[
-{emoji:"🎨",title:"Renkler",text:"Işıkla renk karışımında kırmızı, yeşil ve mavi temel renkler olarak kullanılır."},
-{emoji:"🖼️",title:"Perspektif",text:"Perspektif, düz bir yüzeyde derinlik hissi oluşturmak için kullanılabilir."},
-{emoji:"🎵",title:"Müzik",text:"Müzikte ritim, seslerin ve sessizliklerin zaman içindeki düzenidir."}],
-"Tarih":[
-{emoji:"🏛️",title:"Antik yapılar",text:"Arkeologlar eski yapıları ve buluntuları inceleyerek geçmiş hakkında bilgi edinir."},
-{emoji:"📜",title:"Yazının önemi",text:"Yazı, insanların bilgileri ve olayları kaydetmesini kolaylaştırmıştır."},
-{emoji:"🧭",title:"Keşifler",text:"Eski haritalar, insanların dünyayı nasıl tanıdığını anlamamıza yardımcı olur."}],
-"Teknoloji":[
-{emoji:"💻",title:"Kodlama",text:"Bilgisayar programları, bilgisayara hangi işlemleri yapacağını söyleyen talimatlardan oluşur."},
-{emoji:"🤖",title:"Robotlar",text:"Robotlar sensörler ve programlar yardımıyla çevrelerinden bilgi alıp görev yapabilir."},
-{emoji:"🌐",title:"İnternet",text:"İnternet, dünyanın farklı yerlerindeki bilgisayar ve cihazların iletişim kurmasını sağlar."}],
-"Diğer":[
-{emoji:"🧠",title:"Hafıza",text:"Uyku, öğrenilen bilgilerin hatırlanmasına yardımcı olan süreçlerle ilişkilidir."},
-{emoji:"🗣️",title:"Diller",text:"Dünyada binlerce dil konuşulur ve her dil insanların iletişim kurmasına yardımcı olur."},
-{emoji:"🧩",title:"Bulmacalar",text:"Bulmacalar, farklı çözüm yollarını denemek ve mantık yürütmek için güzel fırsatlardır."}]
+(function(){
+const buttons=[...document.querySelectorAll('.topic')],notice=document.getElementById('notice'),title=document.getElementById('topic-title'),copy=document.getElementById('topic-copy'),profile=document.getElementById('profile'),result=document.getElementById('result');
+let selected='';
+const descriptions={
+'Bilim':'Deneyler, keşifler ve evrenin nasıl çalıştığını araştırabiliriz.',
+'Matematik':'Sayılar, şekiller ve mantık bulmacaları dünyasına dalabiliriz.',
+'Uzay':'Gezegenleri, yıldızları ve uzayın gizemlerini keşfedebiliriz.',
+'Doğa ve hayvanlar':'Canlıları, okyanusları ve doğanın şaşırtıcı özelliklerini öğrenebiliriz.',
+'Tarih ve kültür':'Geçmiş uygarlıkları, ilginç yerleri ve farklı kültürleri tanıyabiliriz.',
+'Diğer':'Aklındaki başka bir konuyu da keşfedebiliriz; merakının sınırı yok!'
 };
-
-document.getElementById("learnButton").addEventListener("click",()=>{
-const container=document.getElementById("cards");
-container.innerHTML="";
-let items=[];
-Array.from(selectedTopics).forEach(topic=>{
-items.push(...(discoveries[topic]||discoveries["Diğer"]));
+buttons.forEach(button=>button.addEventListener('click',()=>{
+selected=button.dataset.topic;
+buttons.forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+title.textContent=selected+' seçildi! 🌟';copy.textContent=descriptions[selected];notice.classList.add('show');
+}));
+document.getElementById('explore').addEventListener('click',()=>{
+profile.hidden=false;
+if(!selected){title.textContent='Önce bir konu da seçebilirsin!';copy.textContent='İstersen yukarıdan bir konu seçip keşfe devam et.';notice.classList.add('show');}
+profile.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
 });
-items.sort(()=>Math.random()-0.5).slice(0,3).forEach(item=>{
-const card=document.createElement("article");
-card.className="card";
-const picture=document.createElement("div");
-picture.className="picture";
-picture.textContent=item.emoji;
-const title=document.createElement("h3");
-title.textContent=item.title;
-const text=document.createElement("p");
-text.textContent=item.text;
-card.append(picture,title,text);
-container.appendChild(card);
+document.getElementById('form').addEventListener('submit',event=>{
+event.preventDefault();
+const name=document.getElementById('name').value.trim(),age=Number(document.getElementById('age').value),interests=document.getElementById('interests').value.trim();
+if(!name||!Number.isFinite(age)||age<5||age>100||!interests){result.textContent='Lütfen bilgileri kontrol edip tekrar dene.';result.classList.add('show');return;}
+result.textContent='Merhaba '+name+'! ☁️ '+(selected?selected+' konusundan':'seçtiğin konudan')+' başlayabiliriz. İlgi alanların: '+interests+'. Bu sayfada henüz video yok; Windy’nin keşif alanı hazır!';
+result.classList.add('show');
 });
-document.getElementById("learningSubtitle").textContent="Seçtiğin konulardan 3 küçük keşif! 💙";
-showPage(learningPage);
-});
+})();
 </script>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</body></html>
 
 
 
