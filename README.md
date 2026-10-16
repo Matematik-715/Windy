@@ -1,2 +1,2 @@
-# Windy
+Windy
 Windy-Öğrenmenin Okyanusu
