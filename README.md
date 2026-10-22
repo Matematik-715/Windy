@@ -1,2 +1,0 @@
-Windy
-Windy-Öğrenmenin Okyanusu
